@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1. Grund-Styles */
+@layer base {
+  body {
+    @apply bg-neutral-900 text-neutral-100 font-sans antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-bold;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold mb-4 text-primary-300;
+  }
+}
+
+/* 2. Komponenten-Styles */
+@layer components {
+  .btn {
+    @apply px-6 py-3 font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary-500 hover:bg-secondary-600 text-white;
+  }
+
+  .card {
+    @apply border border-primary-500/30 rounded-xl bg-neutral-800/50 text-neutral-200 shadow-md;
+  }
+
+  .empty-state {
+    @apply bg-neutral-800/50 text-neutral-300 text-center px-4 py-3 rounded-lg;
+  }
+
+  .pill {
+    @apply inline-block px-2 py-1 text-xs rounded-full;
+  }
+
+  .pill-active {
+    @apply pill bg-cyan-500/10 text-cyan-400;
+  }
+
+  .pill-inactive {
+    @apply pill bg-gray-700 text-gray-400;
+  }
+
+  .pill-current {
+    @apply pill bg-pink-500/20 text-pink-400;
+  }
+
+  .wheel-container {
+    @apply aspect-square rounded-full border-8 border-primary-500 bg-neutral-800 shadow-[0_0_30px_rgba(0,225,255,0.5)];
+  }
+
+  .bg-tonband {
+    background: linear-gradient(135deg, #1a1a1a, #0e0e0e);
+  }
+}
+
+/* 3. Utility-Animationen */
+@layer utilities {
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-wave {
+    animation: wave 8s linear infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+}
+
+/* 4. Custom Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes wave {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 5. Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 225, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 225, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 225, 255, 0.3);
+}
