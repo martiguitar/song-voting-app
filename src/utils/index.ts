@@ -65,6 +65,7 @@ export const isVotingAllowed = (): boolean => {
   nextSunday.setDate(now.getDate() + daysUntilSunday);
   nextSunday.setHours(10, 0, 0, 0);
 
+  // Voting is closed between Friday 18:00 and Sunday 10:00
   const isClosed = now >= lastFriday && now < nextSunday;
   return !isClosed;
 };
