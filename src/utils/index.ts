@@ -52,22 +52,21 @@ export const getVotingEndTime = (): Date => {
 
 export const isVotingAllowed = (): boolean => {
   const now = new Date();
+  const currentDay = now.getDay(); // 0 = Sunday, 5 = Friday
+  const currentHour = now.getHours();
 
-  // Letzter Freitag 18:00 Uhr
-  const lastFriday = new Date(now);
-  const daysSinceFriday = (now.getDay() + 7 - 5) % 7;
-  lastFriday.setDate(now.getDate() - daysSinceFriday);
-  lastFriday.setHours(18, 0, 0, 0);
+  // If it's Sunday (0), only allow after 10:00
+  if (currentDay === 0) {
+    return currentHour >= 10;
+  }
 
-  // Kommender Sonntag 10:00 Uhr
-  const nextSunday = new Date(now);
-  const daysUntilSunday = (7 - now.getDay()) % 7;
-  nextSunday.setDate(now.getDate() + daysUntilSunday);
-  nextSunday.setHours(10, 0, 0, 0);
+  // If it's Friday (5), only allow before 18:00
+  if (currentDay === 5) {
+    return currentHour < 18;
+  }
 
-  // Voting is closed between Friday 18:00 and Sunday 10:00
-  const isClosed = now >= lastFriday && now < nextSunday;
-  return !isClosed;
+  // Allow Monday (1) through Thursday (4)
+  return currentDay >= 1 && currentDay <= 4;
 };
 
 export const isSameDay = (date1: Date, date2: Date): boolean => {
