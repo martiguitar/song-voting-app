@@ -71,6 +71,10 @@ const translations = {
     'setup.lock': 'Lock Admin Area',
     'setup.manageSongs': 'Manage Songs',
     'setup.manageSongsDesc': 'Block or unblock songs from voting. Blocked songs will be automatically unblocked after 4 weeks.',
+    'vote.notificationTitle': 'Please only vote if you plan to attend',
+    'vote.notificationMessage': 'Please only vote for songs if you plan to be at the next session. Your vote helps decide which songs we will play together!',
+    'vote.understand': 'I understand',
+    'songs.votingClosed': 'Voting closed',
   },
   de: {
     'app.title': 'ton.band',
@@ -134,6 +138,10 @@ const translations = {
     'setup.lock': 'Admin-Bereich sperren',
     'setup.manageSongs': 'Songs verwalten',
     'setup.manageSongsDesc': 'Sperre oder entsperre Songs für die Abstimmung. Gesperrte Songs werden nach 4 Wochen automatisch entsperrt.',
+    'vote.notificationTitle': 'Bitte nur voten, wenn du dabei sein wirst',
+    'vote.notificationMessage': 'Bitte stimme nur für Songs ab, wenn du bei der nächsten Session dabei sein wirst. Deine Stimme entscheidet mit, welche Songs wir zusammen spielen werden!',
+    'vote.understand': 'Verstanden',
+    'songs.votingClosed': 'Abstimmung geschlossen',
   }
 };
 

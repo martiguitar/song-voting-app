@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Song } from '../types';
 import { ChevronUp, ChevronDown, Trash2, Music, Link as LinkIcon, RotateCcw, ExternalLink, User, Ban, Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useSettings } from '../hooks/useSettings';
 import SongDetailsModal from './SongDetailsModal';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
+import VoteNotificationModal from './VoteNotificationModal';
 import { isVotingAllowed } from '../utils';
 
 interface SongCardProps {
@@ -45,6 +46,15 @@ const SongCard: React.FC<SongCardProps> = ({
   const [showDetails, setShowDetails] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showBlockConfirm, setShowBlockConfirm] = useState(false);
+  const [showVoteNotification, setShowVoteNotification] = useState(false);
+  const [pendingVoteAction, setPendingVoteAction] = useState<(() => void) | null>(null);
+
+  useEffect(() => {
+    const hasSeenNotification = localStorage.getItem('voteNotificationSeen');
+    if (!hasSeenNotification) {
+      setShowVoteNotification(false);
+    }
+  }, []);
 
   const isNew = Date.now() - song.addedAt.getTime() < 5 * 24 * 60 * 60 * 1000; // 5 days
   const isBlocked = song.blockedUntil && song.blockedUntil > new Date();
@@ -59,7 +69,28 @@ const SongCard: React.FC<SongCardProps> = ({
   const handleVoteClick = (e: React.MouseEvent, action: () => void) => {
     e.stopPropagation();
     if (isBlocked || !votingAllowed) return;
-    action();
+
+    const hasSeenNotification = localStorage.getItem('voteNotificationSeen');
+    if (!hasSeenNotification) {
+      setPendingVoteAction(() => action);
+      setShowVoteNotification(true);
+    } else {
+      action();
+    }
+  };
+
+  const handleConfirmVote = () => {
+    localStorage.setItem('voteNotificationSeen', 'true');
+    setShowVoteNotification(false);
+    if (pendingVoteAction) {
+      pendingVoteAction();
+      setPendingVoteAction(null);
+    }
+  };
+
+  const handleCancelVote = () => {
+    setShowVoteNotification(false);
+    setPendingVoteAction(null);
   };
 
   const handleRemoveClick = (e: React.MouseEvent) => {
@@ -315,7 +346,7 @@ const SongCard: React.FC<SongCardProps> = ({
             </h3>
             <p className="text-neutral-300 mb-2">{song.title}</p>
             <p className="text-neutral-400 mb-6">{song.artist}</p>
-            
+
             <div className="flex gap-3">
               <button
                 onClick={handleConfirmBlock}
@@ -334,6 +365,12 @@ const SongCard: React.FC<SongCardProps> = ({
           </div>
         </div>
       )}
+
+      <VoteNotificationModal
+        isOpen={showVoteNotification}
+        onClose={handleCancelVote}
+        onConfirm={handleConfirmVote}
+      />
     </>
   );
 };
