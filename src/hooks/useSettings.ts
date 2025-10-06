@@ -61,7 +61,7 @@ export const useSettings = () => {
     try {
       const { error } = await supabase
         .from('settings')
-        .upsert({ key, value });
+        .upsert({ key, value }, { onConflict: 'key' });
 
       if (error) {
         console.error('Error updating setting:', error);
@@ -75,6 +75,7 @@ export const useSettings = () => {
 
   const toggleDownvote = async () => {
     const newValue = !settings.downvoteEnabled;
+    setSettings(prev => ({ ...prev, downvoteEnabled: newValue }));
     await updateSetting('downvote_enabled', newValue.toString());
   };
 
