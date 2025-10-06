@@ -16,7 +16,7 @@ type View = 'current' | 'allSongs' | 'setup';
 function App() {
   const [currentView, setCurrentView] = useState<View>('current');
   const [scrollProgress, setScrollProgress] = useState(0);
-  const { songs, topSongs, addSong, upvoteSong, downvoteSong, undoVote, removeSong, addLink, removeLink, nextSessionDate, hasVoted, allSongs, userId } = useSongs();
+  const { songs, topSongs, addSong, upvoteSong, downvoteSong, undoVote, removeSong, addLink, removeLink, nextSessionDate, hasVoted, allSongs } = useSongs();
   const { t } = useLanguage();
   
   useEffect(() => {
@@ -85,7 +85,6 @@ function App() {
                 onAddLink={addLink}
                 onRemoveLink={removeLink}
                 hasVoted={hasVoted}
-                currentUserId={userId}
               />
               <SongList
                 songs={songs}
@@ -97,7 +96,6 @@ function App() {
                 onRemoveLink={removeLink}
                 topSongIds={topSongs.map(song => song.id)}
                 hasVoted={hasVoted}
-                currentUserId={userId}
               />
             </>
           )}

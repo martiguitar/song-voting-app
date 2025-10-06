@@ -54,7 +54,6 @@ export const useSongs = () => {
           addedAt: new Date(song.added_at),
           sessionDate: new Date(song.session_date),
           submitter: song.submitter,
-          submitterUserId: song.submitter_user_id,
           votedBy: new Set(song.votes?.map((vote: any) => vote.user_id) || []),
           voteType: userVote?.vote_type,
           links: song.links,
@@ -276,7 +275,6 @@ export const useSongs = () => {
         title,
         artist,
         submitter,
-        submitter_user_id: userId,
         session_date: nextSessionDate.toISOString(),
         votes: 0
       })
@@ -395,7 +393,6 @@ export const useSongs = () => {
     nextSessionDate,
     hasVoted,
     sessions,
-    allSongs,
-    userId
+    allSongs
   };
 };

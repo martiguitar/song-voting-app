@@ -23,15 +23,12 @@ interface SongCardProps {
   hasVoted: boolean;
   readonly?: boolean;
   onClick?: () => void;
-  currentUserId?: string;
 }
 
-const ADMIN_PASSWORD = 'Tremonti88';
-
-const SongCard: React.FC<SongCardProps> = ({
-  song,
-  onUpvote,
-  onDownvote,
+const SongCard: React.FC<SongCardProps> = ({ 
+  song, 
+  onUpvote, 
+  onDownvote, 
   onRemove,
   onUndoVote,
   onAddLink,
@@ -42,8 +39,7 @@ const SongCard: React.FC<SongCardProps> = ({
   rank,
   hasVoted,
   readonly = false,
-  onClick,
-  currentUserId
+  onClick
 }) => {
   const { t } = useLanguage();
   const { settings } = useSettings();
@@ -52,9 +48,6 @@ const SongCard: React.FC<SongCardProps> = ({
   const [showBlockConfirm, setShowBlockConfirm] = useState(false);
   const [showVoteNotification, setShowVoteNotification] = useState(false);
   const [pendingVoteAction, setPendingVoteAction] = useState<(() => void) | null>(null);
-  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
-  const [adminPassword, setAdminPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     const hasSeenNotification = localStorage.getItem('voteNotificationSeen');
@@ -63,11 +56,9 @@ const SongCard: React.FC<SongCardProps> = ({
     }
   }, []);
 
-  const isNew = Date.now() - song.addedAt.getTime() < 5 * 24 * 60 * 60 * 1000;
+  const isNew = Date.now() - song.addedAt.getTime() < 5 * 24 * 60 * 60 * 1000; // 5 days
   const isBlocked = song.blockedUntil && song.blockedUntil > new Date();
   const votingAllowed = isVotingAllowed();
-  const isOwnSong = currentUserId && song.submitterUserId === currentUserId;
-  const canDelete = !readonly && (isOwnSong || false);
 
   const getBlockedDaysRemaining = () => {
     if (!song.blockedUntil || song.blockedUntil <= new Date()) return 0;
@@ -104,11 +95,7 @@ const SongCard: React.FC<SongCardProps> = ({
 
   const handleRemoveClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (isOwnSong) {
-      setShowDeleteConfirm(true);
-    } else {
-      setShowPasswordPrompt(true);
-    }
+    setShowDeleteConfirm(true);
   };
 
   const handleBlockClick = (e: React.MouseEvent) => {
@@ -119,18 +106,6 @@ const SongCard: React.FC<SongCardProps> = ({
   const handleConfirmDelete = () => {
     onRemove(song.id);
     setShowDeleteConfirm(false);
-  };
-
-  const handlePasswordSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (adminPassword === ADMIN_PASSWORD) {
-      setShowPasswordPrompt(false);
-      setShowDeleteConfirm(true);
-      setAdminPassword('');
-      setPasswordError('');
-    } else {
-      setPasswordError(t('setup.wrongPassword'));
-    }
   };
 
   const handleConfirmBlock = () => {
@@ -309,7 +284,7 @@ const SongCard: React.FC<SongCardProps> = ({
             {!readonly && (
               <>
                 {(onBlock || onUnblock) && (
-                  <button
+                  <button 
                     onClick={handleBlockClick}
                     className={`group relative p-2 transition-colors rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500/50 ${
                       isBlocked
@@ -324,18 +299,16 @@ const SongCard: React.FC<SongCardProps> = ({
                     </span>
                   </button>
                 )}
-                {canDelete && (
-                  <button
-                    onClick={handleRemoveClick}
-                    className="group relative p-2 text-neutral-400 transition-colors rounded-full hover:bg-secondary-500/10 hover:text-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
-                    aria-label={t('songs.remove')}
-                  >
-                    <Trash2 size={14} className="sm:w-4 sm:h-4" />
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-neutral-800 text-neutral-200 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                      {t('songs.remove')}
-                    </span>
-                  </button>
-                )}
+                <button 
+                  onClick={handleRemoveClick}
+                  className="group relative p-2 text-neutral-400 transition-colors rounded-full hover:bg-secondary-500/10 hover:text-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
+                  aria-label={t('songs.remove')}
+                >
+                  <Trash2 size={14} className="sm:w-4 sm:h-4" />
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-neutral-800 text-neutral-200 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    {t('songs.remove')}
+                  </span>
+                </button>
               </>
             )}
           </div>
@@ -398,49 +371,6 @@ const SongCard: React.FC<SongCardProps> = ({
         onClose={handleCancelVote}
         onConfirm={handleConfirmVote}
       />
-
-      {showPasswordPrompt && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/80 backdrop-blur-sm p-4">
-          <div className="bg-neutral-800 rounded-lg shadow-xl border border-primary-500/20 max-w-md w-full p-6">
-            <h3 className="text-xl font-semibold text-primary-300 mb-4">
-              {t('songs.password')}
-            </h3>
-            <p className="text-neutral-400 text-sm mb-4">
-              {t('songs.passwordRequired')}
-            </p>
-            <form onSubmit={handlePasswordSubmit} className="space-y-4">
-              <input
-                type="password"
-                value={adminPassword}
-                onChange={(e) => setAdminPassword(e.target.value)}
-                className="w-full px-3 py-2 bg-neutral-900 border border-primary-500/30 rounded-md text-neutral-100 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50"
-                placeholder="••••••••"
-                autoFocus
-              />
-              {passwordError && <p className="text-sm text-secondary-500">{passwordError}</p>}
-              <div className="flex gap-3">
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-primary-500 text-neutral-900 font-medium rounded-md hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500/50"
-                >
-                  {t('songs.confirm')}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowPasswordPrompt(false);
-                    setAdminPassword('');
-                    setPasswordError('');
-                  }}
-                  className="px-4 py-2 bg-neutral-700 text-neutral-300 rounded-md hover:bg-neutral-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500/50"
-                >
-                  {t('songs.cancel')}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </>
   );
 };

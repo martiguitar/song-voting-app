@@ -15,21 +15,19 @@ interface TopSongsProps {
   onBlock?: (id: string) => void;
   onUnblock?: (id: string) => void;
   hasVoted: (id: string) => boolean;
-  currentUserId?: string;
 }
 
-const TopSongs: React.FC<TopSongsProps> = ({
-  songs,
-  onUpvote,
-  onDownvote,
-  onRemove,
+const TopSongs: React.FC<TopSongsProps> = ({ 
+  songs, 
+  onUpvote, 
+  onDownvote, 
+  onRemove, 
   onUndoVote,
   onAddLink,
   onRemoveLink,
   onBlock,
   onUnblock,
-  hasVoted,
-  currentUserId
+  hasVoted 
 }) => {
   const { t } = useLanguage();
   
@@ -59,7 +57,6 @@ const TopSongs: React.FC<TopSongsProps> = ({
               isTopSong={true}
               rank={index + 1}
               hasVoted={hasVoted(song.id)}
-              currentUserId={currentUserId}
             />
           ))}
         </div>

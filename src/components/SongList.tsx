@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Song } from '../types';
 import SongCard from './SongCard';
-import { List, Search, Import as SortAsc, ArrowUpDown, Music, Vote } from 'lucide-react';
+import { List, Search, SortAsc, ArrowUpDown, Music, Vote } from 'lucide-react';
 
 interface SongListProps {
   songs: Song[];
@@ -16,7 +16,6 @@ interface SongListProps {
   onUnblock?: (id: string) => void;
   topSongIds: string[];
   hasVoted: (id: string) => boolean;
-  currentUserId?: string;
 }
 
 type SortKey = 'votes' | 'title' | 'artist' | 'addedAt';
@@ -33,8 +32,7 @@ const SongList: React.FC<SongListProps> = ({
   onBlock,
   onUnblock,
   topSongIds,
-  hasVoted,
-  currentUserId
+  hasVoted
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>('addedAt');
@@ -172,7 +170,6 @@ const SongList: React.FC<SongListProps> = ({
               onUnblock={onUnblock}
               isTopSong={topSongIds.includes(song.id)}
               hasVoted={hasVoted(song.id)}
-              currentUserId={currentUserId}
             />
           ))}
         </div>

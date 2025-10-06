@@ -8,7 +8,6 @@ export interface Song {
   votedBy: Set<string>;
   voteType?: 'up' | 'down';
   submitter: string;
-  submitterUserId?: string;
   links?: {
     url: string;
     description: string;
