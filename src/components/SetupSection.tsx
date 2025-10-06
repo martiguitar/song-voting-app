@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Settings, RotateCcw, Check, Ban } from 'lucide-react';
+import { Settings, RotateCcw, Check, Ban, ThumbsDown, Toggle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useSongs } from '../hooks/useSongs';
+import { useSettings } from '../hooks/useSettings';
 import SongList from './SongList';
 
 const SETUP_PASSWORD = 'Tremonti88';
@@ -9,6 +10,7 @@ const SETUP_PASSWORD = 'Tremonti88';
 const SetupSection: React.FC = () => {
   const { t } = useLanguage();
   const { resetVotes, songs, blockSong, unblockSong } = useSongs();
+  const { settings, loading: settingsLoading, toggleDownvote } = useSettings();
   const [isResetting, setIsResetting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -89,6 +91,34 @@ const SetupSection: React.FC = () => {
       </div>
       
       <div className="space-y-6">
+        {/* Downvote Toggle Section */}
+        <div className="p-4 rounded-lg bg-neutral-800/50 border border-primary-500/20">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-medium text-neutral-100 mb-1 flex items-center gap-2">
+                <ThumbsDown size={20} />
+                Downvote-Funktion
+              </h3>
+              <p className="text-sm text-neutral-400">
+                Aktiviere oder deaktiviere die Downvote-Buttons für alle Benutzer
+              </p>
+            </div>
+            
+            <button
+              onClick={toggleDownvote}
+              className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500/50 ${
+                settings.downvoteEnabled
+                  ? 'bg-primary-500/20 text-primary-300 hover:bg-primary-500/30'
+                  : 'bg-neutral-700 text-neutral-400 hover:bg-neutral-600'
+              }`}
+              disabled={settingsLoading}
+            >
+              <Toggle size={18} />
+              {settings.downvoteEnabled ? 'Aktiviert' : 'Deaktiviert'}
+            </button>
+          </div>
+        </div>
+
         {/* Reset Votes Section */}
         <div className="p-4 rounded-lg bg-neutral-800/50 border border-primary-500/20">
           <div className="flex items-center justify-between">

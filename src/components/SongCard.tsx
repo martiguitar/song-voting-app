@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Song } from '../types';
 import { ChevronUp, ChevronDown, Trash2, Music, Link as LinkIcon, RotateCcw, ExternalLink, User, Ban, Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useSettings } from '../hooks/useSettings';
 import SongDetailsModal from './SongDetailsModal';
 import DeleteConfirmationDialog from './DeleteConfirmationDialog';
 import { isVotingAllowed } from '../utils';
@@ -40,6 +41,7 @@ const SongCard: React.FC<SongCardProps> = ({
   onClick
 }) => {
   const { t } = useLanguage();
+  const { settings } = useSettings();
   const [showDetails, setShowDetails] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showBlockConfirm, setShowBlockConfirm] = useState(false);
@@ -134,21 +136,23 @@ const SongCard: React.FC<SongCardProps> = ({
           </span>
         </button>
         
-        <button 
-          onClick={(e) => handleVoteClick(e, () => onDownvote(song.id))}
-          className={`group relative p-2 transition-colors rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500/50 ${
-            song.voteType === 'down'
-              ? 'text-secondary-500 bg-secondary-500/20'
-              : 'text-neutral-400 hover:bg-secondary-500/10 hover:text-secondary-500'
-          } ${(hasVoted || isBlocked || !votingAllowed) ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={hasVoted || isBlocked || !votingAllowed}
-          title={!votingAllowed ? t('songs.votingClosed') : isBlocked ? t('songs.blocked') : t('songs.downvote')}
-        >
-          <ChevronDown size={20} />
-          <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-neutral-800 text-neutral-200 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-            {!votingAllowed ? t('songs.votingClosed') : isBlocked ? t('songs.blocked') : t('songs.downvote')}
-          </span>
-        </button>
+        {settings.downvoteEnabled && (
+          <button 
+            onClick={(e) => handleVoteClick(e, () => onDownvote(song.id))}
+            className={`group relative p-2 transition-colors rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500/50 ${
+              song.voteType === 'down'
+                ? 'text-secondary-500 bg-secondary-500/20'
+                : 'text-neutral-400 hover:bg-secondary-500/10 hover:text-secondary-500'
+            } ${(hasVoted || isBlocked || !votingAllowed) ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={hasVoted || isBlocked || !votingAllowed}
+            title={!votingAllowed ? t('songs.votingClosed') : isBlocked ? t('songs.blocked') : t('songs.downvote')}
+          >
+            <ChevronDown size={20} />
+            <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-neutral-800 text-neutral-200 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+              {!votingAllowed ? t('songs.votingClosed') : isBlocked ? t('songs.blocked') : t('songs.downvote')}
+            </span>
+          </button>
+        )}
       </div>
     );
   };
