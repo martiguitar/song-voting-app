@@ -16,6 +16,7 @@ interface SongListProps {
   onUnblock?: (id: string) => void;
   topSongIds: string[];
   hasVoted: (id: string) => boolean;
+  currentUserId?: string;
 }
 
 type SortKey = 'votes' | 'title' | 'artist' | 'addedAt';
@@ -32,7 +33,8 @@ const SongList: React.FC<SongListProps> = ({
   onBlock,
   onUnblock,
   topSongIds,
-  hasVoted
+  hasVoted,
+  currentUserId
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>('addedAt');
@@ -170,6 +172,7 @@ const SongList: React.FC<SongListProps> = ({
               onUnblock={onUnblock}
               isTopSong={topSongIds.includes(song.id)}
               hasVoted={hasVoted(song.id)}
+              currentUserId={currentUserId}
             />
           ))}
         </div>

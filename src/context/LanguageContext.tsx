@@ -90,6 +90,7 @@ const translations = {
     'setup.saving': 'Saving...',
     'setup.htmlSupported': 'HTML is supported (e.g., <h3>, <p>)',
     'setup.wrongPassword': 'Wrong password',
+    'songs.passwordRequired': 'This song was submitted by someone else. Enter admin password to delete it.',
   },
   de: {
     'app.title': 'ton.band',
@@ -172,6 +173,7 @@ const translations = {
     'setup.saving': 'Speichert...',
     'setup.htmlSupported': 'HTML wird unterstützt (z.B. <h3>, <p>)',
     'setup.wrongPassword': 'Falsches Passwort',
+    'songs.passwordRequired': 'Dieser Song wurde von jemand anderem hinzugefügt. Gib das Admin-Passwort ein, um ihn zu löschen.',
   }
 };
 
