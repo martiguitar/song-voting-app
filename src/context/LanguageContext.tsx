@@ -75,6 +75,16 @@ const translations = {
     'vote.notificationMessage': 'Please only vote for songs if you plan to be at the next session. Your vote helps decide which songs we will play together!',
     'vote.understand': 'I understand',
     'songs.votingClosed': 'Voting closed',
+    'footer.imprint': 'Imprint',
+    'footer.privacy': 'Privacy Policy',
+    'footer.responsible': 'Responsible',
+    'footer.contact': 'Contact',
+    'footer.dataCollection': 'Data Collection',
+    'footer.dataCollectionText': 'This application collects song suggestions, artist names, submitter names, and voting information. All data is stored in a secure database and is only used for the purpose of organizing band sessions.',
+    'footer.localStorage': 'Local Storage',
+    'footer.localStorageText': 'This application uses local storage to remember your voting preferences and to show notifications only once. No personal data is stored in local storage.',
+    'footer.cookies': 'Cookies',
+    'footer.cookiesText': 'This application does not use cookies.',
   },
   de: {
     'app.title': 'ton.band',
@@ -142,6 +152,16 @@ const translations = {
     'vote.notificationMessage': 'Bitte stimme nur für Songs ab, wenn du bei der nächsten Session dabei sein wirst. Deine Stimme entscheidet mit, welche Songs wir zusammen spielen werden!',
     'vote.understand': 'Verstanden',
     'songs.votingClosed': 'Abstimmung geschlossen',
+    'footer.imprint': 'Impressum',
+    'footer.privacy': 'Datenschutzerklärung',
+    'footer.responsible': 'Verantwortlich',
+    'footer.contact': 'Kontakt',
+    'footer.dataCollection': 'Datenerfassung',
+    'footer.dataCollectionText': 'Diese Anwendung erfasst Song-Vorschläge, Künstlernamen, Namen der Einreichenden und Abstimmungsinformationen. Alle Daten werden in einer sicheren Datenbank gespeichert und ausschließlich zum Zweck der Organisation von Band-Sessions verwendet.',
+    'footer.localStorage': 'Lokaler Speicher',
+    'footer.localStorageText': 'Diese Anwendung verwendet lokalen Speicher, um deine Abstimmungspräferenzen zu speichern und Benachrichtigungen nur einmal anzuzeigen. Es werden keine personenbezogenen Daten im lokalen Speicher gespeichert.',
+    'footer.cookies': 'Cookies',
+    'footer.cookiesText': 'Diese Anwendung verwendet keine Cookies.',
   }
 };
 
