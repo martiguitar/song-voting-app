@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, RotateCcw, Check, Ban, ThumbsDown, Toggle } from 'lucide-react';
+import { Settings, RotateCcw, Check, Ban, ThumbsDown, ToggleLeft as Toggle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useSongs } from '../hooks/useSongs';
 import { useSettings } from '../hooks/useSettings';
