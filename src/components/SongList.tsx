@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Song } from '../types';
 import SongCard from './SongCard';
-import { List, Search, SortAsc, ArrowUpDown, Music, Vote } from 'lucide-react';
+import { List, Search, Import as SortAsc, ArrowUpDown, Music, Vote } from 'lucide-react';
 
 interface SongListProps {
   songs: Song[];
