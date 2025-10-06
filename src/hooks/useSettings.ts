@@ -3,11 +3,19 @@ import { supabase } from '../lib/supabase';
 
 interface Settings {
   downvoteEnabled: boolean;
+  imprintContentDe: string;
+  imprintContentEn: string;
+  privacyContentDe: string;
+  privacyContentEn: string;
 }
 
 export const useSettings = () => {
   const [settings, setSettings] = useState<Settings>({
-    downvoteEnabled: true
+    downvoteEnabled: true,
+    imprintContentDe: '',
+    imprintContentEn: '',
+    privacyContentDe: '',
+    privacyContentEn: ''
   });
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +37,11 @@ export const useSettings = () => {
         }, {} as Record<string, string>) || {};
 
         setSettings({
-          downvoteEnabled: settingsMap.downvote_enabled === 'true'
+          downvoteEnabled: settingsMap.downvote_enabled === 'true',
+          imprintContentDe: settingsMap.imprint_content_de || '',
+          imprintContentEn: settingsMap.imprint_content_en || '',
+          privacyContentDe: settingsMap.privacy_content_de || '',
+          privacyContentEn: settingsMap.privacy_content_en || ''
         });
       } catch (error) {
         console.error('Error in fetchSettings:', error);
@@ -79,9 +91,24 @@ export const useSettings = () => {
     await updateSetting('downvote_enabled', newValue.toString());
   };
 
+  const updateLegalContent = async (
+    type: 'imprint' | 'privacy',
+    language: 'de' | 'en',
+    content: string
+  ) => {
+    const key = `${type}_content_${language}`;
+    const settingKey = type === 'imprint'
+      ? (language === 'de' ? 'imprintContentDe' : 'imprintContentEn')
+      : (language === 'de' ? 'privacyContentDe' : 'privacyContentEn');
+
+    setSettings(prev => ({ ...prev, [settingKey]: content }));
+    await updateSetting(key, content);
+  };
+
   return {
     settings,
     loading,
-    toggleDownvote
+    toggleDownvote,
+    updateLegalContent
   };
 };

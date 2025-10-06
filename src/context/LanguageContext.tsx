@@ -85,6 +85,11 @@ const translations = {
     'footer.localStorageText': 'This application uses local storage to remember your voting preferences and to show notifications only once. No personal data is stored in local storage.',
     'footer.cookies': 'Cookies',
     'footer.cookiesText': 'This application does not use cookies.',
+    'setup.edit': 'Edit',
+    'setup.save': 'Save',
+    'setup.saving': 'Saving...',
+    'setup.htmlSupported': 'HTML is supported (e.g., <h3>, <p>)',
+    'setup.wrongPassword': 'Wrong password',
   },
   de: {
     'app.title': 'ton.band',
@@ -162,6 +167,11 @@ const translations = {
     'footer.localStorageText': 'Diese Anwendung verwendet lokalen Speicher, um deine Abstimmungspräferenzen zu speichern und Benachrichtigungen nur einmal anzuzeigen. Es werden keine personenbezogenen Daten im lokalen Speicher gespeichert.',
     'footer.cookies': 'Cookies',
     'footer.cookiesText': 'Diese Anwendung verwendet keine Cookies.',
+    'setup.edit': 'Bearbeiten',
+    'setup.save': 'Speichern',
+    'setup.saving': 'Speichert...',
+    'setup.htmlSupported': 'HTML wird unterstützt (z.B. <h3>, <p>)',
+    'setup.wrongPassword': 'Falsches Passwort',
   }
 };
 

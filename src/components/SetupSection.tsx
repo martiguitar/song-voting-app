@@ -4,13 +4,14 @@ import { useLanguage } from '../context/LanguageContext';
 import { useSongs } from '../hooks/useSongs';
 import { useSettings } from '../hooks/useSettings';
 import SongList from './SongList';
+import LegalContentEditor from './LegalContentEditor';
 
 const SETUP_PASSWORD = 'Tremonti88';
 
 const SetupSection: React.FC = () => {
   const { t } = useLanguage();
   const { resetVotes, songs, blockSong, unblockSong } = useSongs();
-  const { settings, loading: settingsLoading, toggleDownvote } = useSettings();
+  const { settings, loading: settingsLoading, toggleDownvote, updateLegalContent } = useSettings();
   const [isResetting, setIsResetting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -157,13 +158,34 @@ const SetupSection: React.FC = () => {
           </div>
         </div>
 
+        {/* Legal Content Sections */}
+        <LegalContentEditor
+          title={t('footer.imprint')}
+          contentDe={settings.imprintContentDe}
+          contentEn={settings.imprintContentEn}
+          onSave={async (contentDe, contentEn) => {
+            await updateLegalContent('imprint', 'de', contentDe);
+            await updateLegalContent('imprint', 'en', contentEn);
+          }}
+        />
+
+        <LegalContentEditor
+          title={t('footer.privacy')}
+          contentDe={settings.privacyContentDe}
+          contentEn={settings.privacyContentEn}
+          onSave={async (contentDe, contentEn) => {
+            await updateLegalContent('privacy', 'de', contentDe);
+            await updateLegalContent('privacy', 'en', contentEn);
+          }}
+        />
+
         {/* Song Management Section */}
         <div className="p-4 rounded-lg bg-neutral-800/50 border border-primary-500/20">
           <div className="mb-4">
             <h3 className="text-lg font-medium text-neutral-100 mb-1">{t('setup.manageSongs')}</h3>
             <p className="text-sm text-neutral-400">{t('setup.manageSongsDesc')}</p>
           </div>
-          
+
           <SongList
             songs={songs}
             onUpvote={() => {}}

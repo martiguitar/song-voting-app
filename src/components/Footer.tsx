@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Github, Heart } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useSettings } from '../hooks/useSettings';
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { settings } = useSettings();
   const [showImprint, setShowImprint] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
 
@@ -52,17 +54,12 @@ const Footer = () => {
             <div className="sticky top-0 bg-neutral-800 border-b border-primary-500/20 p-6">
               <h2 className="text-2xl font-semibold text-primary-300">{t('footer.imprint')}</h2>
             </div>
-            <div className="p-6 space-y-4 text-neutral-300">
-              <div>
-                <h3 className="text-lg font-semibold text-neutral-100 mb-2">{t('footer.responsible')}</h3>
-                <p>ton.band</p>
-                <p>Angaben gemäß § 5 TMG</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-neutral-100 mb-2">{t('footer.contact')}</h3>
-                <p>E-Mail: info@ton.band</p>
-              </div>
-            </div>
+            <div
+              className="p-6 space-y-4 text-neutral-300 prose prose-invert max-w-none"
+              dangerouslySetInnerHTML={{
+                __html: language === 'de' ? settings.imprintContentDe : settings.imprintContentEn
+              }}
+            />
             <div className="sticky bottom-0 bg-neutral-800 border-t border-primary-500/20 p-6">
               <button
                 onClick={() => setShowImprint(false)}
@@ -81,20 +78,12 @@ const Footer = () => {
             <div className="sticky top-0 bg-neutral-800 border-b border-primary-500/20 p-6">
               <h2 className="text-2xl font-semibold text-primary-300">{t('footer.privacy')}</h2>
             </div>
-            <div className="p-6 space-y-4 text-neutral-300">
-              <div>
-                <h3 className="text-lg font-semibold text-neutral-100 mb-2">{t('footer.dataCollection')}</h3>
-                <p className="mb-2">{t('footer.dataCollectionText')}</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-neutral-100 mb-2">{t('footer.localStorage')}</h3>
-                <p className="mb-2">{t('footer.localStorageText')}</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-neutral-100 mb-2">{t('footer.cookies')}</h3>
-                <p className="mb-2">{t('footer.cookiesText')}</p>
-              </div>
-            </div>
+            <div
+              className="p-6 space-y-4 text-neutral-300 prose prose-invert max-w-none"
+              dangerouslySetInnerHTML={{
+                __html: language === 'de' ? settings.privacyContentDe : settings.privacyContentEn
+              }}
+            />
             <div className="sticky bottom-0 bg-neutral-800 border-t border-primary-500/20 p-6">
               <button
                 onClick={() => setShowPrivacy(false)}
