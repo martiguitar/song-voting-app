@@ -151,14 +151,14 @@ const SongCard: React.FC<SongCardProps> = ({
 
     return (
       <div className="flex gap-1" onClick={e => e.stopPropagation()}>
-        <button 
+        <button
           onClick={(e) => handleVoteClick(e, () => onUpvote(song.id))}
           className={`group relative p-2 transition-colors rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500/50 ${
             song.voteType === 'up'
               ? 'text-primary-300 bg-primary-500/20'
               : 'text-neutral-400 hover:bg-primary-500/10 hover:text-primary-300'
-          } ${(hasVoted || isBlocked || !votingAllowed) ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={hasVoted || isBlocked || !votingAllowed}
+          } ${(isBlocked || !votingAllowed) ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={isBlocked || !votingAllowed}
           title={!votingAllowed ? t('songs.votingClosed') : isBlocked ? t('songs.blocked') : t('songs.upvote')}
         >
           <ChevronUp size={20} />
@@ -166,16 +166,16 @@ const SongCard: React.FC<SongCardProps> = ({
             {!votingAllowed ? t('songs.votingClosed') : isBlocked ? t('songs.blocked') : t('songs.upvote')}
           </span>
         </button>
-        
+
         {settings.downvoteEnabled && (
-          <button 
+          <button
             onClick={(e) => handleVoteClick(e, () => onDownvote(song.id))}
             className={`group relative p-2 transition-colors rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500/50 ${
               song.voteType === 'down'
                 ? 'text-secondary-500 bg-secondary-500/20'
                 : 'text-neutral-400 hover:bg-secondary-500/10 hover:text-secondary-500'
-            } ${(hasVoted || isBlocked || !votingAllowed) ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={hasVoted || isBlocked || !votingAllowed}
+            } ${(isBlocked || !votingAllowed) ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={isBlocked || !votingAllowed}
             title={!votingAllowed ? t('songs.votingClosed') : isBlocked ? t('songs.blocked') : t('songs.downvote')}
           >
             <ChevronDown size={20} />
